@@ -13,6 +13,6 @@
   "scripts": {
     "test": "npx mocha test/*.js"
   },
-  "author": "",
+  "author": "KhafraDev",
   "license": "MIT"
 }

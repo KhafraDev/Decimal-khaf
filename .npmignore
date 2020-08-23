@@ -1,0 +1,3 @@
+# .npmignore overrides .gitignore, allowing us to not publish .js files to GitHub
+# while allowing this module to still be installed and used without additional work.
+*.ts

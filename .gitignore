@@ -1,3 +1,7 @@
+# Khafra
+*.js
+!test/*.js
+
 # Logs
 logs
 *.log
