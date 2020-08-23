@@ -1,10 +1,13 @@
 {
   "name": "decimal-khaf",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Decimal.js but with BigInts",
   "main": "Decimal.js",
   "directories": {
     "test": "test"
+  },
+  "repository": {
+    "url": "https://github.com/khafradev/decimal-khaf"
   },
   "devDependencies": {
     "mocha": "^8.1.1",
