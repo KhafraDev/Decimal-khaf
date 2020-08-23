@@ -33,7 +33,7 @@ export class Decimal {
 
 			// 1.4e1000 -> true
 			// 1e1000 	-> true
-			if(!/\d+e\d+/.test(value)) {
+			if(!/\d+e\+?\d+/.test(value)) {
 				throw new Error(`Invalid string received: ${value}.`);
 			} else if(value.indexOf('.') > -1 && value.indexOf('e') === -1) { 
 				// 1.44020293 -> true
@@ -41,7 +41,7 @@ export class Decimal {
 				return BigInt(value.split('.').shift());
 			}
 			
-			const [mantissa, exponent] = value.split('e');
+			const [mantissa, exponent] = value.split(/e\+?/);
 			const places = (+mantissa % 1 === 0) // 1.4 % 1 !== 0, 1 % 1 === 0
 				? +exponent
 				: Math.abs((mantissa.length - 1) - +exponent);
@@ -190,4 +190,43 @@ export class Decimal {
 		
 		return x;
 	}
+
+	/**
+	 * multiply a Decimal by itself <value> times.
+	 * @throws if value < 0n
+	 */
+	pow(value: DecimalInputs) {
+		value = this.factory(value);
+		if(value < 0n) {
+			throw new Error(`Received negative power ${value} on <Decimal>.pow!`);
+		}
+
+        return this.value ** value;
+    }
+
+	/**
+	 * multiply a given Decimal-like value by itself <value> times.
+	 * is called on the Decimal class itself; not in an instance of Decimal.
+	 * @throws if value < 0n
+	 */
+    static pow(a: DecimalInputs, b: DecimalInputs) {
+        a = new Decimal(a);
+        b = new Decimal(b);
+
+		if(b.value < 0n) {
+			throw new Error(`Received negative power ${b} on static Decimal.pow!`);
+		}
+		
+		return a.value ** b.value;
+    }
+
+	/**
+	 * Returns an Object representation of a Decimal class.
+	 * Can be used in JSON.stringify to convert to and from BigInt.
+	 */
+    toObject() {
+        return {
+            value: this.value.toString()
+        }
+    }
 }
